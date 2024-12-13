@@ -4,8 +4,7 @@ import { Client, PlaceInputType } from '@googlemaps/google-maps-services-js'
 @Injectable()
 export class PlacesService {
 
-  constructor(private googleMaps: Client) {
-  }
+  constructor(private googleMaps: Client) {}
 
   async findPlaces(text: string) {
     const { data } = await this.googleMaps.findPlaceFromText({

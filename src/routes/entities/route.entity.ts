@@ -8,13 +8,13 @@ export class Route {
   updatedAt?: Date
 }
 
-class Place {
+export class Place {
   id: string
   address: string
   location: Coordinates
 }
 
-class Coordinates {
+export class Coordinates {
   lat: number
   lng: number
 }
