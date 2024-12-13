@@ -1,8 +1,19 @@
 ###
-GET http://localhost:3000/places?text=brasilia
+GET http://localhost:3000/places?text=sao paulo
 ###
-@origin = ChIJ8f21C60Lag0R_q11auhbf8Y
+@origin = ChIJdeKa3xg9WpMRJEp1aeRwhHM
 @destination = ChIJrVgvRn1ZzpQRF3x74eJBUh4
 
 ###
 GET http://localhost:3000/directions?origin={{ origin }}&destination={{ destination }}
+
+###
+POST http://localhost:3000/routes
+Content-Type: application/json
+
+{
+    "origin": "{{ origin }}",
+    "destination": "{{ destination}}"
+}
+
+###

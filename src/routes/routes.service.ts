@@ -2,29 +2,40 @@ import { Injectable } from '@nestjs/common';
 import { CreateRouteDto } from './dto/create-route.dto';
 import { UpdateRouteDto } from './dto/update-route.dto';
 import { PrismaService } from 'src/prisma/prisma.service'
+import { DirectionsService } from 'src/maps/directions/directions.service'
+import { Route } from './entities/route.entity'
 
 @Injectable()
 export class RoutesService {
 
-  constructor(private database: PrismaService) {}
-  
-  create(createRouteDto: CreateRouteDto) {
-    return 'This action adds a new route';
+  constructor(private database: PrismaService, private directionsService: DirectionsService) {}
+
+  async create(createRouteDto: CreateRouteDto) {
+    const { routes } = await this.directionsService.getDirections(createRouteDto.origin, createRouteDto.destination)
+    const firstPath = routes[0].legs[0]
+    const route: Route = {
+      destination: {
+        id: createRouteDto.destination,
+        address: firstPath.start_address,
+        location: firstPath.start_location,
+      },
+      origin: {
+        id: createRouteDto.origin,
+        address: firstPath.end_address,
+        location: firstPath.end_location,
+      },
+      distance: firstPath.distance.value,
+      duration: firstPath.duration.value,
+    }
+    return this.database.route.create({data: route})
   }
 
   findAll() {
-    return `This action returns all routes`;
+    return this.database.route.findMany();
   }
 
-  findOne(id: number) {
-    return `This action returns a #${id} route`;
+  findOne(id: string) {
+    return this.database.route.findFirst({ where: { id } });
   }
 
-  update(id: number, updateRouteDto: UpdateRouteDto) {
-    return `This action updates a #${id} route`;
-  }
-
-  remove(id: number) {
-    return `This action removes a #${id} route`;
-  }
 }
