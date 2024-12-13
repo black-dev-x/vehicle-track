@@ -1,1 +1,8 @@
-GET http://localhost:3000/places?text=barcelona
+###
+GET http://localhost:3000/places?text=brasilia
+###
+@origin = ChIJ8f21C60Lag0R_q11auhbf8Y
+@destination = ChIJrVgvRn1ZzpQRF3x74eJBUh4
+
+###
+GET http://localhost:3000/directions?origin={{ origin }}&destination={{ destination }}
