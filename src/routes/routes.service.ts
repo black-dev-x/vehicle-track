@@ -27,7 +27,8 @@ export class RoutesService {
       distance: firstPath.distance.value,
       duration: firstPath.duration.value,
     }
-    return this.database.route.create({data: route})
+    const response = await this.database.route.create({data: route})
+    return response
   }
 
   findAll() {
