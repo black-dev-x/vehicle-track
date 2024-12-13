@@ -1,5 +1,5 @@
 ###
-GET http://localhost:3000/places?text=sao paulo
+GET http://localhost:3000/places?login=sao paulo
 ###
 @origin = ChIJdeKa3xg9WpMRJEp1aeRwhHM
 @destination = ChIJrVgvRn1ZzpQRF3x74eJBUh4

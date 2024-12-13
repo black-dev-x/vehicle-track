@@ -8,7 +8,6 @@ import { PrismaService } from 'src/prisma/prisma.service'
 
 @Injectable()
 export class RouteDriverService {
-
   constructor(private database: PrismaService) {}
 
   async processRoute(routeDriverPosition: RouteDriverPosition) {
