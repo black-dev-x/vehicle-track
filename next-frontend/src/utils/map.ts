@@ -8,7 +8,7 @@ export class Map {
   constructor(element: HTMLElement, options: google.maps.MapOptions) {
     this.map = new google.maps.Map(element, {
       ...options,
-      /*styles: [
+      styles: [
         { elementType: "geometry", stylers: [{ color: "#242f3e" }] },
         { elementType: "labels.text.stroke", stylers: [{ color: "#242f3e" }] },
         { elementType: "labels.text.fill", stylers: [{ color: "#746855" }] },
@@ -87,7 +87,7 @@ export class Map {
           elementType: "labels.text.stroke",
           stylers: [{ color: "#17263c" }],
         },
-      ],*/
+      ],
     });
   }
 

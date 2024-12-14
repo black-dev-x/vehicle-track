@@ -6,8 +6,8 @@ export type DirectionsData = DirectionsResponseData & { request: any };
 export type RouteModel = {
   id: string;
   name: string;
-  source: { name: string; location: { lat: number; lng: number } };
-  destination: { name: string; location: { lat: number; lng: number } };
+  origin: { address: string; location: { lat: number; lng: number } };
+  destination: { address: string; location: { lat: number; lng: number } };
   distance: number;
   duration: number;
   // eslint-disable-next-line @typescript-eslint/no-explicit-any

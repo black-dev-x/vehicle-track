@@ -3,14 +3,13 @@
 import { PropsWithChildren, useActionState } from "react";
 import { createRouteAction } from "./create-route.action";
 
+export type FormSubmissionState = {
+  error?: string
+  success?: boolean;
+} | null
+
 export function NewRouteForm(props: PropsWithChildren) {
-  const [state, formAction] = useActionState<
-    {
-      error?: string;
-      success?: boolean;
-    } | null,
-    FormData
-  >(createRouteAction, null);
+  const [state, formAction] = useActionState<FormSubmissionState,FormData>(createRouteAction, null);
   return (
     <form action={formAction}>
       {state?.error && (

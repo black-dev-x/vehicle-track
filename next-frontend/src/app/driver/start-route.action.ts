@@ -9,7 +9,7 @@ export async function startRouteAction(state: any, formData: FormData) {
   }
 
   const response = await fetch(
-    `${process.env.NEST_API_URL}/routes/${route_id}/start`,
+    `http://localhost:3000/routes/${route_id}/start`,
     {
       method: "POST",
     }
