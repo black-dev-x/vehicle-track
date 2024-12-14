@@ -2,7 +2,6 @@ import { Coordinates } from './../entities/route.entity';
 import { Injectable } from '@nestjs/common';
 import { CreateRouteDriverDto } from './dto/create-route-driver.dto';
 import { UpdateRouteDriverDto } from './dto/update-route-driver.dto';
-import { RouteDriver } from './entities/route-driver.entity'
 import { RouteDriverPosition } from './dto/route-driver-position.dto'
 import { PrismaService } from 'src/prisma/prisma.service'
 
