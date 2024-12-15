@@ -9,7 +9,7 @@ export function useMap(containerRef: React.RefObject<HTMLDivElement>) {
   useEffect(() => {
     (async () => {
       const loader = new Loader({
-        apiKey: process.env.NEXT_PUBLIC_GOOGLE_API_KEY as string,
+        apiKey: process.env.NEXT_PUBLIC_GOOGLE_MAPS_API_KEY as string,
         libraries: ["routes", "geometry", "marker"],
       });
       const [, , , position] = await Promise.all([
@@ -19,7 +19,7 @@ export function useMap(containerRef: React.RefObject<HTMLDivElement>) {
         getCurrentPosition({ enableHighAccuracy: true }),
       ]);
       const map = new Map(containerRef.current!, {
-        mapId: "8e0a97af9386fef",
+        mapId: "8e0a97af9386fef", //theme
         zoom: 15,
         center: position,
       });

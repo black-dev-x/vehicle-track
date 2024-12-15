@@ -1,13 +1,12 @@
 import { Controller, Get, Query } from '@nestjs/common';
-import { PlacesService } from './places.service'
+import { PlacesService } from './places.service';
 
 @Controller('places')
 export class PlacesController {
+  constructor(private readonly placesService: PlacesService) {}
 
-  constructor(private placesService: PlacesService){}
   @Get()
   findPlaces(@Query('text') text: string) {
-    return this.placesService.findPlaces(text)
-
+    return this.placesService.findPlaces(text);
   }
 }

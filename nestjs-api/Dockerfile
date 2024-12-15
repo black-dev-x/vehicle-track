@@ -1,16 +1,11 @@
 FROM node:22.8.0-slim
 
-RUN apt update && apt install openssl procps -y
+RUN apt update && \
+    apt install openssl procps -y && \
+    npm install -g @nestjs/cli@10.4.8
 
-WORKDIR /app
+USER node
 
+WORKDIR /home/node/app
 
-COPY package.json /app
-COPY package-lock.json /app
-
-RUN npm install
-RUN npm run prisma
-
-COPY . /app
-
-CMD tail -f /dev/null
+CMD [ "tail", "-f", "/dev/null" ]

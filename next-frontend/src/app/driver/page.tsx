@@ -3,13 +3,18 @@ import { MapDriver } from "./MapDriver";
 import { StartRouteForm } from "./StartRouteForm";
 
 export async function getRoutes() {
-  const response = await fetch(`http://localhost:3000/routes`);
+  const response = await fetch(`${process.env.NEST_API_URL}/routes`, {
+    cache: "force-cache",
+    next: {
+      tags: ["routes"],
+    },
+  });
+  //revalidate por demanda
   return response.json();
 }
 
 export async function DriverPage() {
   const routes = await getRoutes();
-  console.log(routes)
 
   return (
     <div className="flex flex-1 w-full h-full">
@@ -22,12 +27,12 @@ export async function DriverPage() {
               name="route_id"
               className="mb-2 p-2 border rounded bg-default text-contrast"
             >
-              <option value="">
+              <option key="0" value="">
                 Selecione uma rota
               </option>
               {routes.map((route: RouteModel) => (
                 <option key={route.id} value={route.id}>
-                  {route.origin.address} - {route.destination.address}
+                  {route.name}
                 </option>
               ))}
             </select>

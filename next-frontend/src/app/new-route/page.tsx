@@ -2,16 +2,29 @@ import { MapNewRoute } from "./MapNewRoute";
 import { NewRouteForm } from "./NewRouteForm";
 
 export async function searchDirections(source: string, destination: string) {
+  console.log(source, destination);
   const [sourceResponse, destinationResponse] = await Promise.all([
-    fetch(`http://localhost:3000/places?text=${source}`),
-    fetch(`http://localhost:3000/places?text=${destination}`),
+    fetch(`${process.env.NEST_API_URL}/places?text=${source}`, {
+      // cache: "force-cache", //default
+      // next: {
+      //   revalidate: 1 * 60 * 60 * 24, // 1 dia
+      // }
+    }),
+    fetch(`${process.env.NEST_API_URL}/places?text=${destination}`, {
+      // cache: "force-cache", //default
+      // next: {
+      //   revalidate: 1 * 60 * 60 * 24, // 1 dia
+      // }
+    }),
   ]);
 
   if (!sourceResponse.ok) {
+    console.error(await sourceResponse.text());
     throw new Error("Failed to fetch source data");
   }
 
   if (!destinationResponse.ok) {
+    console.error(await destinationResponse.text());
     throw new Error("Failed to fetch destination data");
   }
 
@@ -24,7 +37,13 @@ export async function searchDirections(source: string, destination: string) {
   const placeDestinationId = destinationData.candidates[0].place_id;
 
   const directionsResponse = await fetch(
-    `http://localhost:3000/directions?origin=${placeSourceId}&destination=${placeDestinationId}`
+    `${process.env.NEST_API_URL}/directions?originId=${placeSourceId}&destinationId=${placeDestinationId}`,
+    {
+      // cache: "force-cache", //default
+      // next: {
+      //   revalidate: 1 * 60 * 60 * 24, // 1 dia
+      // },
+    }
   );
 
   if (!directionsResponse.ok) {
@@ -60,7 +79,6 @@ export async function NewRoutePage({
     placeDestinationId = result.placeDestinationId;
   }
 
-  console.log(placeSourceId, placeDestinationId);
   return (
     <div className="flex flex-1 w-full h-full">
       <div className="w-1/3 p-4 h-full">
@@ -109,19 +127,19 @@ export async function NewRoutePage({
           <div className="mt-4 p-4 border rounded text-contrast">
             <ul>
               <li className="mb-2">
-                <strong>Origem: </strong>
+                <strong>Origem:</strong>{" "}
                 {directionsData.routes[0].legs[0].start_address}
               </li>
               <li className="mb-2">
-                <strong>Destino: </strong>
+                <strong>Destino:</strong>{" "}
                 {directionsData.routes[0].legs[0].end_address}
               </li>
               <li className="mb-2">
-                <strong>Distância: </strong>
+                <strong>Distância:</strong>{" "}
                 {directionsData.routes[0].legs[0].distance.text}
               </li>
               <li className="mb-2">
-                <strong>Duração: </strong>
+                <strong>Duração:</strong>{" "}
                 {directionsData.routes[0].legs[0].duration.text}
               </li>
             </ul>
@@ -129,14 +147,14 @@ export async function NewRoutePage({
               {placeSourceId && (
                 <input
                   type="hidden"
-                  name="origin"
+                  name="sourceId"
                   defaultValue={placeSourceId}
                 />
               )}
               {placeDestinationId && (
                 <input
                   type="hidden"
-                  name="destination"
+                  name="destinationId"
                   defaultValue={placeDestinationId}
                 />
               )}
